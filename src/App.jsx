@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
@@ -13,17 +14,13 @@ export const tabs = [
 export const App = () => {
   const [activeTabId, setActiveTab] = useState('tab-1');
 
-  let active = false;
+  useEffect(() => {
+    const isValid = tabs.some(tab => tab.id === activeTabId);
 
-  for (let i = 0; i < tabs.length; i += 1) {
-    if (tabs[i].id === activeTabId) {
-      active = true;
+    if (!isValid) {
+      setActiveTab('tab-1');
     }
-  }
-
-  if (!active) {
-    setActiveTab('tab-1');
-  }
+  }, [activeTabId]);
 
   const activeTab = tabs.find(tab => tab.id === activeTabId) || tabs[0];
 
